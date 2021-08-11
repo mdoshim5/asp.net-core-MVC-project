@@ -1,0 +1,37 @@
+﻿@model PaintingStore.ViewModels.BuyPaintingView;
+@{
+    ViewBag.Title = "Buy Painting";
+}
+
+<h1>Are you sure to buy the bellow painting?</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <img src="~/images/@ViewBag.PhotoPath" class="card-img" style="width:40%; height:auto" />
+        </div>
+        <div class="card-footer">
+            @ViewBag.Name by @ViewBag.Artist
+        </div>
+    </div>
+    <div>
+        <h3>You will get @ViewBag.membership% discount as for you Membership.</h3>
+    </div>
+</div>
+<div>
+    <form asp-action="BuyPainting" asp-controller="Buy" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-check">
+            <div class="form-group form-check">
+                <input class="form-check-input" asp-for="Term" /> @Html.DisplayNameFor(model => model.Term)
+                <span asp-validation-for="Term"></span>
+            </div>
+            <div><button type="submit" asp-action="BuyPainting" asp-controller="Buy" asp-route-id="@ViewBag.Id" class="btn btn-primary">Buy</button></div>
+        </div>
+    </form>
+</div>
+
+@{/*
+
+            <input type="checkbox" name="Term" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">I know the Terms & Conditions</label>
+        */}

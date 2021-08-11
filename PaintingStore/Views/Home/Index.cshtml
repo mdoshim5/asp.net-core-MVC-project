@@ -1,0 +1,63 @@
+﻿@model IEnumerable<PaintingView>
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-5">Welcome to our Painting Gallery</h1>
+</div>
+
+@if (Model.Any())
+{
+<div class="row">
+    @if (signInManager.IsSignedIn(User)&& User.Identity.Name=="admin@admin.com")
+    {
+        <div class="col">
+            <a asp-action="CreatePainting" asp-controller="home" class="btn btn-primary">Create New</a>
+        </div>
+    }
+
+    <div class="col">
+        <form method="post" asp-action="index" asp-controller="home">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+    <div class="mb-4"></div>
+    <div class="card-deck">
+        @foreach(var paint in Model)
+        {
+        <div class="card" style="max-width:31%; min-width:18rem;">
+            <div class="card-header">
+                @paint.Name by @paint.Artist
+            </div>
+            <img src="~/images/@paint.PhotoPath" style="height:200px; width:auto" />
+            @if (signInManager.IsSignedIn(User))
+            {
+                <div class="card-footer">
+                    <a class="btn btn-primary" asp-action="BuyPainting" asp-controller="Buy" asp-route-id="@paint.Id">Buy Now</a>
+                </div>
+            }
+        </div>
+
+        }
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            <h4>Sorry no records yet. Visit After some time</h4>
+        </div>
+        <div class="card-footer">
+            <a asp-action="CreatePainting" asp-controller="home" class="btn btn-primary">Create New</a>
+        </div>
+    </div>
+}

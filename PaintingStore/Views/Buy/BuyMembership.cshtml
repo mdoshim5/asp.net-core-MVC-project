@@ -1,0 +1,19 @@
+﻿@model PaintingStore.ViewModels.BuyMembershipView;
+
+@{
+    ViewBag.Title = "Buy Membership";
+}
+
+<h1>Do you Want to buy Member-ship?</h1>
+
+
+<form method="post" asp-action="BuyMembership" asp-controller="Buy" class="mt-4">
+    <select asp-for="Membership" class="form-select p-2" aria-label="Default select example">
+        <option selected value="">Select Member Ship Level</option>
+        <option>Platinum</option>
+        <option>Gold</option>
+        <option>Silver</option>
+    </select>
+    <button class="btn btn-primary btn-lg" type="submit">Buy</button>
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
